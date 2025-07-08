@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_migrate import Migrate
 
 from database import db
@@ -30,8 +30,8 @@ app.register_blueprint(bp_usuarios, url_prefix='/usuarios')
 
 
 @app.route('/')
-def index():
-    return 'Hello from Flask!'
+def index():    
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
