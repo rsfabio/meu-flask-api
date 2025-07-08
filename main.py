@@ -3,6 +3,7 @@ from flask_migrate import Migrate
 
 from database import db
 from usuarios import bp_usuarios
+from login import bp_login # importa a blueprint de login
 
 app = Flask(__name__)
 #1db.init_app(app)
@@ -15,7 +16,8 @@ app = Flask(__name__)
 #2app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Dados de conexão do Supabase
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres.bpliaykiuaqtokvuejwc:meubanco@aws-0-sa-east-1.pooler.supabase.com:6543/postgres'
+app.config[
+    'SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres.bpliaykiuaqtokvuejwc:meubanco@aws-0-sa-east-1.pooler.supabase.com:6543/postgres'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'minha-chave'
@@ -25,12 +27,11 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 app.register_blueprint(bp_usuarios, url_prefix='/usuarios')
-
-
+app.register_blueprint(bp_login) # registra a blueprint
 
 
 @app.route('/')
-def index():    
+def index():
     return render_template('index.html')
 
 
